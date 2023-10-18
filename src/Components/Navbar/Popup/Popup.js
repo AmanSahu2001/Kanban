@@ -10,7 +10,7 @@ const Popup = ({ onClose, groupBy, sortOrder, setGroupBy, setSortOrder }) => {
   };
 
   return (
-    <div className="popup" onClick={onClose}>
+    <div className="popup">
       <span className="close-btn" onClick={onClose}>
         &times;
       </span>
