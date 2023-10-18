@@ -1,11 +1,8 @@
-import Card from "./BoardColumn/Card/Card.js";
 import "./Board.css";
 import BoardColumn from "./BoardColumn/BoardColumn.js";
 
 const Board = ({ data, groupBy, sortOrder }) => {
   const { tickets, users } = data;
-
-  // Group tasks based on the selected grouping option
   const groupTasks = (tasks, groupingOption) => {
     if (groupingOption === "status") {
       return tasks.reduce((grouped, task) => {
@@ -37,12 +34,8 @@ const Board = ({ data, groupBy, sortOrder }) => {
         return grouped;
       }, {});
     }
-
-    // Default: Group by status if no valid grouping option is provided
     return groupTasks(tasks, "status");
   };
-
-  // Sort tasks based on the selected sorting option
   const sortTasks = (tasks, sortingOption) => {
     return tasks.sort((a, b) => {
       if (sortingOption === "title") {
@@ -50,27 +43,22 @@ const Board = ({ data, groupBy, sortOrder }) => {
       } else if (sortingOption === "priority") {
         return b.priority - a.priority;
       }
-      // Default: Sort by title if no valid sorting option is provided
       return a.title.localeCompare(b.title);
     });
   };
-
-  // Group and sort tasks based on user selections
   const groupedTasks = groupTasks(tickets, groupBy);
-  const sortedTasks = sortTasks(tickets, sortOrder);
 
   return (
     <div className="board">
-      {/* <div className="board_top">
-        <p className="board_top_title">
-          to do<span>2</span>
-        </p>
-        <span className="material-symbols-outlined">add</span>
-        <span className="material-symbols-outlined">more_vert</span>
-      </div> */}
       <div className="board_cards">
         {Object.keys(groupedTasks).map((group, index) => (
-          <BoardColumn key={index} title={group} tasks={groupedTasks[group]} />
+          <BoardColumn
+            key={index}
+            title={group}
+            userdata={data.users}
+            groupBy={groupBy}
+            tasks={sortTasks(groupedTasks[group], sortOrder)}
+          />
         ))}
       </div>
     </div>

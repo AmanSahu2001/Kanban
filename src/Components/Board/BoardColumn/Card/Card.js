@@ -1,7 +1,7 @@
 import "./Card.css";
 import Tag from "./Tag/Tag.js";
 
-const Card = ({ task }) => {
+const Card = ({ task, userdata, groupBy }) => {
   return (
     <div className="card">
       <div className="card_top">
